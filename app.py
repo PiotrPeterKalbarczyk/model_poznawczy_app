@@ -16,7 +16,7 @@ pytanie_2a = st.text_input("Kto?", placeholder = "Kogo dotyczyla sytuacja:")
 pytanie_2b = st.date_input("Kiedy?",datetime.date.today())
 pytanie_2c = st.text_input("Gdzie?")
 pytanie_2d = st.text_area(
-    label = "Opis?",
+    label = "Opis",
     height = 200,)
 
 
@@ -55,7 +55,7 @@ if on:
         emo = st.selectbox("Emocja 3:", emocje[kat], key="emo_3")
     with col3:
         perc = st.slider("% danej emocji 3:", 0, 100, 50, 5, key="perc_3")
-    emocje_list.append(f"{kat} - {emo} ({perc}%)")
+    emocje_list.append(f"{kat} - {emo} - {perc}")
 
 
 
@@ -88,6 +88,13 @@ with col1:
 with col2:
     st.checkbox("Nie zadziałałem wg impulsu", key="pytanie_6b", on_change=select_6b)
 
+# Zapis końcowego wyboru
+if st.session_state.pytanie_6a:
+    impuls_wybrany = True
+elif st.session_state.pytanie_6b:
+    impuls_wybrany = False
+else:
+    impuls_wybrany = "Brak odpowiedzi"
 
 
 pytanie_7 = st.text_area(
@@ -102,25 +109,31 @@ pytanie_9 = st.text_area(
     label = "mysl alternatywna",
     height = 200,)
 
+data = {
+    "obszar": pytanie_1,
+    "kto": pytanie_2a.strip().capitalize(),
+    "kiedy": str(pytanie_2b),
+    "gdzie": pytanie_2c.strip().title(),
+    "opis": pytanie_2d,
+    "mysl_automatyczna": pytanie_3,
+    "emocja_1": emocje_list[0],
+    "emocja_2": emocje_list[1],
+    "reakcje": pytanie_5,
+    "impuls": impuls_wybrany,
+    "dowody_za": pytanie_7,
+    "dowody_przeciw": pytanie_8,
+    "mysl_alternatywna": pytanie_9
+}
+if len(emocje_list)>2:
+    data["emocja_3"] = emocje_list[2]
 
-if st.button("Zapisz"):
-    data = {
-        "obszar": pytanie_1,
-        "kto": pytanie_2a.strip().capitalize(),
-        "kiedy": str(pytanie_2b),
-        "gdzie": pytanie_2c.strip().title(),
-        "opis": pytanie_2d,
-        "mysl_automatyczna": pytanie_3,
-        "emocja 1": emocje_list[0],
-        "emocja 2": emocje_list[1],
-        "reakcje": pytanie_5,
-        #"impuls": pytanie_6a,
-        "dowody_za": pytanie_7,
-        "dowody_przeciw": pytanie_8,
-        "mysl_alternatywna": pytanie_9
-    }
-    if len(emocje_list)>2:
-        data["emocja 3"] = emocje_list[2]
-        
+if st.button("Zapisz"):  
     df=pd.DataFrame([data])
     df.to_csv("entries.csv", mode="a", header=not os.path.exists("entries.csv"), index=False, encoding='cp1250')
+
+if st.button("PDF"):
+    from generate_pdf import generate_pdf
+    pdf_path=generate_pdf(data)
+    
+
+

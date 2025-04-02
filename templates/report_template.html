@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+      
+        table {
+            width: 100%;
+            
+            table-layout: fixed;  /* 👈 To bardzo ważne! */
+            word-wrap: break-word;
+        }
+      
+        td, th {
+            border: 1px solid #000;
+            padding: 8px;
+            vertical-align: top;
+            word-wrap: break-word;  /* 👈 Działa na starsze silniki */
+            overflow-wrap: break-word;  /* 👈 Działa na nowsze */
+        }
+      </style>
+</head>
+<body>
+
+    <h1 style="text-align:center;">Model poznawczy – raport</h1>
+
+    <table>
+        <tr>
+            <td><b>Obszar</b></td>
+            <td colspan="4">{{ obszar }}</td>
+        </tr>
+        <tr>
+            <td><b>Kto?</b></td>
+            <td>{{ kto }}</td>
+            <td><b>Kiedy?</b></td>
+            <td>{{ kiedy }}</td>
+            <td><b>Gdzie?</b></td>
+            <td>{{ gdzie }}</td>
+        </tr>
+        <tr>
+            <td colspan="6"><b>Opis sytuacji</b><br>{{ opis }}</td>
+        </tr>
+        <tr>
+            <td colspan="6"><b>Myśli automatyczne</b><br>{{ mysl_automatyczna }}</td>
+        </tr>
+        <tr>
+            <td colspan="6"><b>Emocje i nastroje</b></td>
+        </tr>
+        <tr>
+            <td><b>Emocja 1</b></td>
+            <td colspan="2">{{ emocja_1 }}</td>
+            <td colspan="3"><b>%</b> {{ procent_1 }}</td>
+        </tr>
+        <tr>
+            <td><b>Emocja 2</b></td>
+            <td colspan="2">{{ emocja_2 }}</td>
+            <td colspan="3"><b>%</b> {{ procent_2 }}</td>
+        </tr>
+        {% if emocja_3 %}
+        <tr>
+            <td><b>Emocja 3</b></td>
+            <td colspan="2">{{ emocja_3 }}</td>
+            <td colspan="3"><b>%</b> {{ procent_3 }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td colspan="6"><b>Reakcje behawioralne – impuls (co zrobiłem/najchętniej bym zrobił)</b><br>{{ reakcje }}</td>
+        </tr>
+        <tr>
+            <td class="checkbox" colspan="3">☑ {{ impuls }}</td>
+            <td class="checkbox" colspan="3">☐ {{ "Nie wybrano" if not impuls else "" }}</td>
+        </tr>
+        <tr>
+            <td colspan="6"><b>Dowody za myślą automatyczną</b><br>{{ dowody_za }}</td>
+        </tr>
+        <tr>
+            <td colspan="6"><b>Dowody przeciw myśli automatycznej</b><br>{{ dowody_przeciw }}</td>
+        </tr>
+        <tr>
+            <td colspan="6"><b>Myśl alternatywna</b><br>{{ mysl_alternatywna }}</td>
+        </tr>
+    </table>
+
+</body>
+</html>
