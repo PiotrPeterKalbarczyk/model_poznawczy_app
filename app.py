@@ -2,9 +2,14 @@ import pandas as pd
 import streamlit as st
 import datetime
 import os
-
-st.title('Model Poznawczy')
-st.header('To jest test')
+st.markdown(
+    """
+    <div style="text-align: center;">
+        <h1>Model Poznawczy</h1>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 pytanie_1 = st.selectbox(
     "Obszar:",
@@ -32,30 +37,39 @@ emocje = {
     "Miłość": ["Czułość", "Zauroczenie", "Pożądanie", "Troska", "Intymność", "Uwielbienie", "Ciepło", "Tęsknota"],
     "Radość": ["Zadowolenie", "Wdzięczność", "Podekscytowanie", "Spełnienie", "Zainspirowanie", "Optymizm", "Spokój", "Szczęście"]
 }
+
 emocje_list = []
 
 for i in range(2):
+    emocja = []
     col1, col2, col3 = st.columns(3)
     with col1:
         kat = st.selectbox(f"Kategoria {i+1} :", list(emocje.keys()), key=f"kat_{i}")
+        emocja.append(kat)
     with col2:
         emo = st.selectbox(f"Emocja {i+1} :", emocje[kat], key=f"emo_{i}")
+        emocja.append(emo)
     with col3:
         perc = st.slider(f"% danej emocji {i+1} :", 0,100,50,5, key=f"perc_{i}")
-    emocje_list.append(f"{kat} - {emo} - {perc}")
+        emocja.append(perc)
+    emocje_list.append(emocja)
 
 
 on = st.toggle("Dodac emocje?")
 
 if on:
+    emocja = []
     col1, col2, col3 = st.columns(3)
     with col1:
         kat = st.selectbox("Kategoria 3:", list(emocje.keys()), key="kat_3")
+        emocja.append(kat)
     with col2:
         emo = st.selectbox("Emocja 3:", emocje[kat], key="emo_3")
+        emocja.append(emo)
     with col3:
         perc = st.slider("% danej emocji 3:", 0, 100, 50, 5, key="perc_3")
-    emocje_list.append(f"{kat} - {emo} - {perc}")
+        emocja.append(perc)
+    emocje_list.append(emocja)
 
 
 
