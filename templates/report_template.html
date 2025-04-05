@@ -4,23 +4,33 @@
     <meta charset="UTF-8">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
+            font-family: "Arial", sans-serif;
+            margin: 20px;
+            background-color: rgb(255, 255, 255);
         }
       
         table {
             width: 100%;
-            
-            table-layout: fixed;  /* 👈 To bardzo ważne! */
+            height: 80%;
+            border-collapse: collapse;
+            border: 1px solid #000;
+            table-layout: fixed;
             word-wrap: break-word;
+            text-align: center;
         }
       
         td, th {
-            border: 1px solid #000;
+            border: 1.8px solid #000;
             padding: 8px;
             vertical-align: top;
-            word-wrap: break-word;  /* 👈 Działa na starsze silniki */
-            overflow-wrap: break-word;  /* 👈 Działa na nowsze */
+            word-wrap: break-word; 
+            overflow-wrap: break-word; 
+        }
+        .class-left {
+            text-align: left;
+        }
+        .class-grey {
+            background-color:  rgb(233, 226, 226);
         }
       </style>
 </head>
@@ -30,60 +40,82 @@
 
     <table>
         <tr>
-            <td><b>Obszar</b></td>
+            <td class = "class-grey" colspan="2"><b>Obszar</b></td>
             <td colspan="4">{{ obszar }}</td>
         </tr>
         <tr>
-            <td><b>Kto?</b></td>
+            <td class = "class-grey"><b>Kto?</b></td>
             <td>{{ kto }}</td>
-            <td><b>Kiedy?</b></td>
+            <td class = "class-grey"><b>Kiedy?</b></td>
             <td>{{ kiedy }}</td>
-            <td><b>Gdzie?</b></td>
+            <td class = "class-grey"><b>Gdzie?</b></td>
             <td>{{ gdzie }}</td>
         </tr>
         <tr>
-            <td colspan="6"><b>Opis sytuacji</b><br>{{ opis }}</td>
+            <td class = "class-grey" colspan="6"><b>Opis sytuacji</b>
         </tr>
         <tr>
-            <td colspan="6"><b>Myśli automatyczne</b><br>{{ mysl_automatyczna }}</td>
+            <td class = "class-left" colspan="6"><br>{{ opis }}<br></td>
         </tr>
         <tr>
-            <td colspan="6"><b>Emocje i nastroje</b></td>
+            <td class = "class-grey" colspan="6"><b>Myśli automatyczne</b>
         </tr>
         <tr>
-            <td><b>Emocja 1</b></td>
-            <td colspan="2">{{ emocja_1 }}</td>
-            <td colspan="3"><b>%</b> {{ procent_1 }}</td>
+            <td class = "class-left" colspan="6"><br>{{ mysl_automatyczna }}<br></td>
         </tr>
         <tr>
-            <td><b>Emocja 2</b></td>
-            <td colspan="2">{{ emocja_2 }}</td>
-            <td colspan="3"><b>%</b> {{ procent_2 }}</td>
+            <td class = "class-grey" colspan="6"><b>Emocje i nastroje</b></td>
+        </tr>
+        <tr>
+            <td class = "class-grey"><b>Emocja 1</b></td>
+            <td colspan="3">{{ emocja_1[0] }}<b> - </b>{{emocja_1[1]}}</td>
+            <td colspan="2"> {{ emocja_1[2] }}<b>%</b></td>
+        </tr>
+        <tr>
+            <td class = "class-grey"><b>Emocja 2</b></td>
+            <td colspan="3">{{ emocja_2[0] }}<b> - </b>{{emocja_2[1]}}</td>
+            <td colspan="2"> {{ emocja_2[2] }}<b>%</b></td>
         </tr>
         {% if emocja_3 %}
         <tr>
-            <td><b>Emocja 3</b></td>
-            <td colspan="2">{{ emocja_3 }}</td>
-            <td colspan="3"><b>%</b> {{ procent_3 }}</td>
+            <td class = "class-grey"><b>Emocja 3</b></td>
+            <td colspan="3">{{ emocja_3[0] }}<b> - </b>{{emocja_3[1]}}</td>
+            <td colspan="2"> {{ emocja_3[2] }}<b>%</b></td>
         </tr>
         {% endif %}
         <tr>
-            <td colspan="6"><b>Reakcje behawioralne – impuls (co zrobiłem/najchętniej bym zrobił)</b><br>{{ reakcje }}</td>
+            <td class = "class-grey" colspan="6"><b>Reakcje behawioralne – impuls (co zrobiłem/najchętniej bym zrobił)</b>
         </tr>
         <tr>
-            <td class="checkbox" colspan="3">☑ {{ impuls }}</td>
-            <td class="checkbox" colspan="3">☐ {{ "Nie wybrano" if not impuls else "" }}</td>
+            <td class = "class-left" colspan="6"><br>{{ reakcje }}</td>
         </tr>
         <tr>
-            <td colspan="6"><b>Dowody za myślą automatyczną</b><br>{{ dowody_za }}</td>
+            {% if impuls %}
+            <td class="checkbox" colspan="3">☑ {{ "Zadziałałem wg impulsu"}}</td>
+            <td class="checkbox" colspan="3">☐ {{ "Nie zadzialalem wg impulsu"}}</td>
+            {% elif not impuls %}
+            <td class="checkbox" colspan="3">☐ {{ "Zadziałałem wg impulsu"}}</td>
+            <td class="checkbox" colspan="3">☑ {{ "Nie zadzialalem wg impulsu"}}</td>
+            {% endif %}
         </tr>
         <tr>
-            <td colspan="6"><b>Dowody przeciw myśli automatycznej</b><br>{{ dowody_przeciw }}</td>
+            <td class = "class-grey" colspan="6"><b>Dowody za myślą automatyczną</b>
         </tr>
         <tr>
-            <td colspan="6"><b>Myśl alternatywna</b><br>{{ mysl_alternatywna }}</td>
+            <td class = "class-left" colspan="6"><br>{{ dowody_za }}<br></td>
+        </tr>
+        <tr>
+            <td class = "class-grey" colspan="6"><b>Dowody przeciw myśli automatycznej</b>
+        </tr>
+        <tr>
+            <td class = "class-left" colspan="6"><br>{{ dowody_przeciw }}<br></td>
+        </tr>
+        <tr>
+            <td class = "class-grey" colspan="6"><b>Myśl alternatywna</b>
+        </tr>
+        <tr>
+            <td class = "class-left" colspan="6"><br>{{ mysl_alternatywna }}<br></td>
         </tr>
     </table>
-
 </body>
 </html>

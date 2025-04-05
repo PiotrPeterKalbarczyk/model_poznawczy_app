@@ -13,7 +13,7 @@ st.markdown(
 
 pytanie_1 = st.selectbox(
     "Obszar:",
-    ("Praca","Przyjazn","Rodzina","Partner"),
+    ("Praca","Przyjazn","Rodzina","Partner", "Społeczność"),
     index = None,
     placeholder = "Wybierz obszar sytuacji:"
 )
