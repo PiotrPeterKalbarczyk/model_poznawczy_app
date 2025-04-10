@@ -25,9 +25,7 @@ pytanie_2d = st.text_area(
     height = 200,)
 
 
-pytanie_3 = st.text_area(
-    label = "Myśli automatyczne",
-    height = 100,)
+
 
 emocje = {
     "Złość": ["Wkurzenie", "Zawstydzenie", "Zazdrość", "Frustracja", "Irytacja", "Zranienie", "Rozdrażnienie", "Rozgoryczenie", "Zawiść"],
@@ -71,7 +69,9 @@ if on:
         emocja.append(perc)
     emocje_list.append(emocja)
 
-
+pytanie_3 = st.text_area(
+    label = "Myśli automatyczne",
+    height = 100,)
 
 pytanie_5 = st.text_area(
     label = "Reakcje behawioralne",
